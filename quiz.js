@@ -3,7 +3,8 @@ const choices = Array.from(document.getElementsByClassName('choice-text'));
 const scoreText = document.getElementById("score");
 const progressText = document.getElementById("progressText");
 const progressBarFull = document.getElementById("progressBarFull");
-
+const loader = document.getElementById('loader');
+const game = document.getElementById('game');
 
 let currentQuestion = {};
 let acceptingAnswers = false;
