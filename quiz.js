@@ -11,32 +11,38 @@ let score = 0;
 let questionCounter = 0;
 let availableQuesions = [];
 
-let questions = [
-    {
-        question: 'What is the capital city of Ghana?',
-        choice1: '<Ouagadougou>',
-        choice2: '<Accra>',
-        choice3: '<Lagos>',
-        choice4: '<Ghana>',
-        answer: 2,
-    },
-    {
-        question: 'Which is the official language of Ghana?',
-        choice1: '<Portugese>',
-        choice2: '<Swaheli>',
-        choice3: '<French>',
-        choice4: '<English>',
-        answer: 4,
-    },
-    {
-        question: 'What is a common form of transport in Ghana?',
-        choice1: '<Donkey>',
-        choice2: '<Tro-Tro (Minibuses)>',
-        choice3: '<Bike>',
-        choice4: '<Train>',
-        answer: 2,
-    },
-];
+let questions = [];
+fetch(
+  'https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple'
+)
+    .then((res) => {
+        return res.json();
+    })
+    .then((loadedQuestions) => {
+      questions = loadedQuestions.results.map((loadedQuestion) => {
+          const formattedQuestion = {
+              question: loadedQuestion.question,
+          };
+
+          const answerChoices = [...loadedQuestion.incorrect_answers];
+          formattedQuestion.answer = Math.floor(Math.random() * 4) + 1;
+          answerChoices.splice(
+              formattedQuestion.answer - 1,
+              0,
+              loadedQuestion.correct_answer
+          );
+
+          answerChoices.forEach((choice, index) => {
+              formattedQuestion['choice' + (index + 1)] = choice;
+          });
+
+          return formattedQuestion;
+      });
+      startGame();
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
 const CORRECT_BONUS = 10;
 const MAX_QUESTIONS = 3;
@@ -46,6 +52,8 @@ startGame = () => {
   score = 0;
   availableQuesions = [...questions];
   getNewQuestion();
+  game.classList.remove('hidden');
+  loader.classList.add('hidden');
 };
 
 getNewQuestion = () => {
@@ -96,4 +104,4 @@ incrementScore = num => {
   scoreText.innerText = score;
 };
 
-startGame();
+
