@@ -15,7 +15,22 @@ let questions = [
         choice4: '<Ghana>',
         answer: 2,
     },
- 
+    {
+        question: 'Which is the official language of Ghana?',
+        choice1: '<Portugese>',
+        choice2: '<Swaheli>',
+        choice3: '<French>',
+        choice4: '<English>',
+        answer: 4,
+    },
+    {
+        question: 'What is a common form of transport in Ghana?',
+        choice1: '<Donkey>',
+        choice2: '<Tro-Tro (Minibuses)>',
+        choice3: '<Bike>',
+        choice4: '<Train>',
+        answer: 2,
+    },
 ];
 
 
